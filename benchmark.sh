@@ -7,6 +7,42 @@ function display_error() {
     exit 1
 }
 
+# Function to display hardware information
+function display_hardware_info() {
+    echo -e "\n\e[96mHardware Information:\e[0m"
+    echo -e "---------------------"
+    echo -e "\e[94mCPU Model:\e[0m $(lscpu | awk -F': ' '/Model name/ {print $2}')"
+    echo -e "\e[94mArchitecture:\e[0m $(lscpu | awk -F': ' '/Architecture/ {print $2}')"
+    echo -e "\e[94mCores:\e[0m $(nproc)"
+    echo -e "\e[94mTotal Memory:\e[0m $(free -h | awk '/^Mem:/ {print $2}')"
+    echo -e "\e[94mTotal Swap:\e[0m $(free -h | awk '/^Swap:/ {print $2}')"
+    echo -e "\e[94mKernel Version:\e[0m $(uname -r)"
+    echo -e "\e[94mDisk Size:\e[0m $(df -h --total | awk '/total/ {print $2}')"
+    echo -e "\e[94mDisk Used:\e[0m $(df -h --total | awk '/total/ {print $3}')"
+    echo -e "\e[94mDisk Available:\e[0m $(df -h --total | awk '/total/ {print $4}')"
+    echo -e "---------------------"
+}
+
+# Function to display network information
+function display_network_info() {
+    echo -e "\n\e[96mNetwork Information:\e[0m"
+    echo -e "---------------------"
+    echo -e "\e[94mHostname:\e[0m $(hostname)"
+    echo -e "\e[94mInternal IP Address:\e[0m $(hostname -I | awk '{print $1}')"
+    echo -e "\e[94mExternal IP Address:\e[0m $(curl -s ifconfig.me)"
+    echo -e "\e[94mSubnet Mask:\e[0m $(ip route | awk '/proto/ {print $3}')"
+    echo -e "\e[94mGateway:\e[0m $(ip route | awk '/default/ {print $3}')"
+    echo -e "\e[94mDNS Servers:\e[0m $(cat /etc/resolv.conf | awk '/nameserver/ {print $2}' | tr '\n' ' ')"
+    echo -e "\e[94mMac Address:\e[0m $(ip link | awk '/ether/ {print $2}')"
+    echo -e "---------------------"
+}
+
+# Display hardware information
+display_hardware_info
+
+# Display network information
+display_network_info
+
 # Check for administrator privileges
 if [[ $EUID -ne 0 ]]; then
     display_error "This script must be run as an administrator (root)."
