@@ -12,6 +12,21 @@ if [[ $EUID -ne 0 ]]; then
     display_error "This script must be run as an administrator (root)."
 fi
 
+# Function to install required packages
+function install_packages() {
+    local packages=("speedtest-cli" "hdparm" "sysbench")
+
+    for package in "${packages[@]}"; do
+        if ! command -v "$package" &>/dev/null; then
+            echo "Installing $package..."
+            apt-get install -y "$package" || display_error "Failed to install $package."
+        fi
+    done
+}
+
+# Install required packages
+install_packages
+
 # Function to run benchmark
 function run_benchmark() {
     local benchmark_type=$1
@@ -124,4 +139,3 @@ function main() {
 
 # Call the main function
 main
-
