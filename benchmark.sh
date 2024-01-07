@@ -23,11 +23,12 @@ function display_hardware_info() {
 
     # Additional hardware information
     echo -e "\n\e[94mTemperature:\e[0m $(vcgencmd measure_temp)"
-    echo -e "\e[94mCPU Frequency:\e[0m $(vcgencmd get_config int | grep arm_freq)"
-    echo -e "\e[94mCore Frequency:\e[0m $(vcgencmd get_config int | grep core_freq)"
-    echo -e "\e[94mSDRAM Frequency:\e[0m $(vcgencmd get_config int | grep sdram_freq)"
-    echo -e "\e[94mGPU Frequency:\e[0m $(vcgencmd get_config int | grep gpu_freq)"
+    echo -e "\e[94mCPU Frequency:\e[0m $(vcgencmd get_config int | grep arm_freq | awk -F'=' '{printf "%s MHz", $2}')\e[94m (Minimum CPU Frequency: $(vcgencmd get_config int | grep arm_freq_min | awk -F'=' '{printf "%s MHz", $2}'))"
+    echo -e "\e[94mCore Frequency:\e[0m $(vcgencmd get_config int | grep core_freq | awk -F'=' '{printf "%s MHz", $2}')\e[94m (Minimum Core Frequency: $(vcgencmd get_config int | grep core_freq_min | awk -F'=' '{printf "%s MHz", $2}'))"
+    echo -e "\e[94mSDRAM Frequency:\e[0m $(grep MemTotal /proc/meminfo | awk '{printf "%.3f MHz", $2/1024}')"
+    echo -e "\e[94mGPU Frequency:\e[0m $(vcgencmd get_config int | grep gpu_freq | awk -F'=' '{printf "%s MHz", $2}')"
     echo -e "\e[94mSD Card Clock:\e[0m $(grep "actual clock" /sys/kernel/debug/mmc0/ios 2>/dev/null | awk '{printf("%.3f MHz", $3/1000000)}')"
+
     echo -e "---------------------"
 }
 
