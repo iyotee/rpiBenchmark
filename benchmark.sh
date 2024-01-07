@@ -96,10 +96,6 @@ function run_benchmark() {
 function benchmark_disk() {
     echo -e "\n\e[96mDisk Benchmark...\e[0m"
 
-    # Running HDPARM test
-    echo -e "Running HDPARM test...\e[94m"
-    local disk_read_speed=$(hdparm -t /dev/mmcblk0 | grep -oP '\d+\.\d+' | tail -n 1)
-
     # Running DD WRITE test
     echo -e "Running DD WRITE test...\e[94m"
     local disk_write_speed=$(rm -f ~/test.tmp && sync && dd if=/dev/zero of=~/test.tmp bs=1M count=512 conv=fsync 2>&1 | grep -oP '\d+\.\d+' | tail -n 1)
