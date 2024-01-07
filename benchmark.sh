@@ -20,6 +20,14 @@ function display_hardware_info() {
     echo -e "\e[94mDisk Size:\e[0m $(df -h --total | awk '/total/ {print $2}')"
     echo -e "\e[94mDisk Used:\e[0m $(df -h --total | awk '/total/ {print $3}')"
     echo -e "\e[94mDisk Available:\e[0m $(df -h --total | awk '/total/ {print $4}')"
+
+    # Additional hardware information
+    echo -e "\n\e[94mTemperature:\e[0m $(vcgencmd measure_temp)"
+    echo -e "\e[94mCPU Frequency:\e[0m $(vcgencmd get_config int | grep arm_freq)"
+    echo -e "\e[94mCore Frequency:\e[0m $(vcgencmd get_config int | grep core_freq)"
+    echo -e "\e[94mSDRAM Frequency:\e[0m $(vcgencmd get_config int | grep sdram_freq)"
+    echo -e "\e[94mGPU Frequency:\e[0m $(vcgencmd get_config int | grep gpu_freq)"
+    echo -e "\e[94mSD Card Clock:\e[0m $(grep "actual clock" /sys/kernel/debug/mmc0/ios 2>/dev/null | awk '{printf("%.3f MHz", $3/1000000)}')"
     echo -e "---------------------"
 }
 
