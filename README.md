@@ -52,7 +52,7 @@ This Bash script is designed for benchmarking a Raspberry Pi's performance and m
 - `speedtest-cli`
 - `stress-ng`
 
-Ensure these dependencies are installed on your Raspberry Pi before running the script.
+The script will check for the presence of each dependency and automatically install any missing packages.
 
 ## License
 
