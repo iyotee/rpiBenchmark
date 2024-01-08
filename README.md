@@ -1,4 +1,4 @@
-# Raspberry Pi Benchmark Script
+# Raspberry Pi Performance Benchmark and Monitoring Script
 
 ## Overview
 
