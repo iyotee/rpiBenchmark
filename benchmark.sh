@@ -46,12 +46,6 @@ function display_network_info() {
     echo -e "---------------------"
 }
 
-# Display hardware information
-display_hardware_info
-
-# Display network information
-display_network_info
-
 # Check for administrator privileges
 if [[ $EUID -ne 0 ]]; then
     display_error "This script must be run as an administrator (root)."
@@ -71,6 +65,12 @@ function install_packages() {
 
 # Install required packages
 install_packages
+
+# Display network information
+display_network_info
+
+# Display hardware information
+display_hardware_info
 
 # Function to run benchmark
 function run_benchmark() {
