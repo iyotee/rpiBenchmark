@@ -59,7 +59,7 @@ fi
 
 # Function to install required packages
 function install_packages() {
-    local packages=("speedtest-cli" "hdparm" "sysbench")
+    local packages=("speedtest-cli" "hdparm" "sysbench" "stress-ng")
 
     for package in "${packages[@]}"; do
         if ! command -v "$package" &>/dev/null; then
@@ -135,6 +135,42 @@ function benchmark_network() {
     printf "+----------------------+-------------------+\n"
 }
 
+# Function for the stress test
+function stress_test() {
+    echo -e "\n\e[96mStress Test...\e[0m"
+
+    # Display current temperature
+    echo -e "Current CPU Temperature: \e[93m$(vcgencmd measure_temp)\e[0m"
+
+    echo -n "Enter the duration of the stress test in seconds: "
+    read -r stress_duration
+
+    # Display temperature before stress test
+    echo -e "Temperature before stress test: \e[93m$(vcgencmd measure_temp)\e[0m"
+
+    echo -e "\nRunning CPU stress test..."
+
+    # Run stress test in the background
+    stress-ng --cpu 4 --timeout "${stress_duration}s" &
+
+    # Monitor temperature during stress test
+    interval=5  # Adjust the interval as needed
+    elapsed_time=0
+
+    while [ $elapsed_time -lt $stress_duration ]; do
+        sleep $interval
+        elapsed_time=$((elapsed_time + interval))
+        echo -e "Elapsed Time: $elapsed_time seconds | CPU Temperature: \e[93m$(vcgencmd measure_temp)\e[0m"
+    done
+
+    # Wait for the stress test to complete
+    wait %1
+
+    # Display temperature after stress test
+    echo -e "\nTemperature after stress test: \e[93m$(vcgencmd measure_temp)\e[0m"
+    echo -e "\nStress test completed.\n"
+}
+
 # Function for the main menu
 function main_menu() {
     echo -e "\n\e[96mBenchmark Menu:\e[0m"
@@ -144,8 +180,9 @@ function main_menu() {
     echo "4. Disk Benchmark"
     echo "5. Network Benchmark"
     echo "6. Run All Benchmarks"
-    echo "7. Exit"
-    echo -n "Enter your choice (1-7): "
+    echo "7. CPU Stress Test"
+    echo "8. Exit"
+    echo -n "Enter your choice (1-8): "
     read -r choice
 
     case $choice in
@@ -155,8 +192,9 @@ function main_menu() {
         4) benchmark_disk ;;
         5) benchmark_network ;;
         6) run_all_benchmarks ;;
-        7) echo -e "\nExiting...\e[0m" ; exit 0 ;;
-        *) echo -e "\e[91mInvalid choice. Please enter a number from 1 to 7.\e[0m" ;;
+        7) stress_test ;;
+        8) echo -e "\nExiting...\e[0m" ; exit 0 ;;
+        *) echo -e "\e[91mInvalid choice. Please enter a number from 1 to 8.\e[0m" ;;
     esac
 }
 
