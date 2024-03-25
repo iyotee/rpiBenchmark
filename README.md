@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/Iyotee/rpiBenchmark">
-    <img src="images/logo.png" alt="Logo" width="669" height="335">
+    <img src="images/logo.svg" alt="Logo" width="669" height="335">
   </a>
 
 # Raspberry Pi Performance Benchmark and Monitoring Script
