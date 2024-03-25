@@ -30,7 +30,7 @@ This Bash script is designed for benchmarking a Raspberry Pi's performance and m
 2. Navigate to the script's directory:
 
     ```bash
-    cd rpi-benchmark
+    cd rpiBenchmark
     ```
 
 3. Make the script executable:
