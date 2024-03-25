@@ -36,13 +36,13 @@ This Bash script is designed for benchmarking a Raspberry Pi's performance and m
 3. Make the script executable:
 
     ```bash
-    chmod +x rpi-benchmark.sh
+    chmod +x benchmark.sh
     ```
 
 4. Run the script:
 
     ```bash
-    ./rpi-benchmark.sh
+    ./benchmark.sh
     ```
 
 ## Dependencies
