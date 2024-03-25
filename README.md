@@ -24,7 +24,7 @@ This Bash script is designed for benchmarking a Raspberry Pi's performance and m
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/rpi-benchmark.git
+    git clone https://github.com/iyotee/rpi-benchmark.git
     ```
 
 2. Navigate to the script's directory:
