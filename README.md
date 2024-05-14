@@ -47,7 +47,7 @@ This Bash script is designed for benchmarking a Raspberry Pi's performance and m
 4. Run the script:
 
     ```bash
-    ./benchmark.sh
+    sudo ./benchmark.sh
     ```
 
 ## Dependencies
