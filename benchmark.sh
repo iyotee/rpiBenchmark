@@ -1,6 +1,8 @@
 #!/bin/bash
 # rpi-benchmark.sh - Raspberry Pi Benchmark Script
 
+set -e
+
 # Function to display an error message and exit
 function display_error() {
     echo -e "\e[91mError: $1\e[0m"
@@ -31,7 +33,6 @@ function display_hardware_info() {
 
     echo -e "---------------------"
 }
-
 # Function to display network information
 function display_network_info() {
     echo -e "\n\e[96mNetwork Information:\e[0m"
@@ -71,7 +72,6 @@ display_network_info
 
 # Display hardware information
 display_hardware_info
-
 # Function to run benchmark
 function run_benchmark() {
     local benchmark_type=$1
@@ -111,8 +111,8 @@ function benchmark_disk() {
     printf "+---------------------------+--------------------------------+\n"
     printf "| \e[96mMetric\e[0m                    | \e[96mScore\e[0m                          |\n"
     printf "+---------------------------+--------------------------------+\n"
-    printf "| Disk Score (Write Speed)	| \e[92m%-26s\e[0m |\n" "${disk_write_speed} MB/s"
-    printf "| Disk Score (Read Speed)	| \e[92m%-26s\e[0m |\n" "${disk_read_dd_speed} MB/s"
+    printf "| Disk Score (Write Speed)  | \e[92m%-26s\e[0m |\n" "${disk_write_speed} MB/s"
+    printf "| Disk Score (Read Speed)   | \e[92m%-26s\e[0m |\n" "${disk_read_dd_speed} MB/s"
     printf "+---------------------------+--------------------------------+\n"
 }
 
@@ -127,11 +127,11 @@ function benchmark_network() {
     echo -e "\e[93m$(vcgencmd measure_temp)\e[0m"
 
     printf "+----------------------+-------------------+\n"
-    printf "| \e[96mMetric\e[0m		| \e[96mScore\e[0m		|\n"
+    printf "| \e[96mMetric\e[0m            | \e[96mScore\e[0m          |\n"
     printf "+----------------------+-------------------+\n"
-    printf "| Download Speed      | \e[92m%-18s\e[0m |\n" "${network_download} Mbps"
-    printf "| Upload Speed        | \e[92m%-18s\e[0m |\n" "${network_upload} Mbps"
-    printf "| Ping (Average Time) | \e[92m%-18s\e[0m |\n" "${network_ping} ms"
+    printf "| Download Speed       | \e[92m%-18s\e[0m |\n" "${network_download} Mbps"
+    printf "| Upload Speed         | \e[92m%-18s\e[0m |\n" "${network_upload} Mbps"
+    printf "| Ping (Average Time)  | \e[92m%-18s\e[0m |\n" "${network_ping} ms"
     printf "+----------------------+-------------------+\n"
 }
 
